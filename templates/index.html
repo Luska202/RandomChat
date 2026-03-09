@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Chat</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+</head>
+<body>
+    <div id="login-screen" class="screen">
+        <h2>Bem-vindo ao Random Chat</h2>
+        <input type="text" id="username" placeholder="Seu nome" required>
+        <div>
+            <label>Sexo:</label>
+            <select id="gender-select">
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+                <option value="other">Outro</option>
+            </select>
+            <input type="text" id="custom-gender" placeholder="Digite seu sexo" style="display:none;">
+        </div>
+        <button id="enter-btn">Entrar</button>
+    </div>
+
+    <div id="choice-screen" class="screen" style="display:none;">
+        <h2>Escolha a modalidade</h2>
+        <button class="modality-btn" data-modality="text">💬 Texto</button>
+        <button class="modality-btn" data-modality="video">📹 Vídeo</button>
+        <button class="modality-btn" data-modality="voice">🎤 Voz</button>
+    </div>
+
+    <div id="chat-screen" class="screen" style="display:none;">
+        <div id="chat-header">
+            <span id="partner-info">Conectando...</span>
+            <button id="next-btn">Próximo</button>
+        </div>
+        <div id="chat-area">
+            <!-- Texto -->
+            <div id="text-chat" style="display:none;">
+                <div id="messages"></div>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="message-input" placeholder="Digite sua mensagem">
+                    <button id="send-msg">Enviar</button>
+                </div>
+            </div>
+
+            <!-- Vídeo (novo layout: remoto em destaque, local em miniatura) -->
+            <div id="video-chat" style="display:none;">
+                <div class="video-container">
+                    <div class="remote-video-wrapper">
+                        <video id="remoteVideo" autoplay></video>
+                        <span class="video-label" id="remoteName"></span>
+                    </div>
+                    <div class="local-video-wrapper">
+                        <video id="localVideo" autoplay muted></video>
+                        <span class="video-label" id="localName"></span>
+                    </div>
+                </div>
+                <div class="video-controls">
+                    <button id="zoom-toggle">🔍 Alternar zoom</button>
+                    <label for="video-size-slider">Tamanho do vídeo remoto:</label>
+                    <input type="range" id="video-size-slider" min="300" max="1200" value="600" step="10">
+                </div>
+            </div>
+
+            <!-- Voz -->
+            <div id="voice-chat" style="display:none;">
+                <div class="voice-container">
+                    <div class="voice-profile">
+                        <div class="avatar" id="localAvatar">👤</div>
+                        <span class="voice-label" id="localVoiceName"></span>
+                    </div>
+                    <div class="voice-profile">
+                        <div class="avatar" id="remoteAvatar">👤</div>
+                        <span class="voice-label" id="remoteVoiceName"></span>
+                    </div>
+                </div>
+                <audio id="remoteAudio" autoplay></audio>
+                <div class="voice-wave" id="voiceWave"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificação pop-up -->
+    <div id="notification" class="notification hidden"></div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
